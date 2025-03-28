@@ -52,6 +52,10 @@ export const App: React.FC = () => {
 
   const onAdd = useCallback(async (value: string) => {
     try {
+      if (value.trim() === '') {
+        throw new Error(ERROR.title);
+      }
+
       const res = await addTodo({
         title: value.trim(),
         userId: USER_ID,
@@ -60,7 +64,7 @@ export const App: React.FC = () => {
 
       return res;
     } catch (err) {
-      setErrorMessage(ERROR.add);
+      setErrorMessage(err.message || ERROR.add);
       throw new Error(ERROR.add);
     } finally {
       setTodosLoading(false);

@@ -1,8 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { ERROR } from '../../types/enums';
+import { Todo } from '../../types/Todo';
 
 type Props = {
-  onAdd: (value: string) => void;
+  onAdd: (value: string) => Promise<Todo>;
 };
 
 export const Header: React.FC<Props> = ({ onAdd }) => {
@@ -13,12 +14,14 @@ export const Header: React.FC<Props> = ({ onAdd }) => {
   const addItem = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      if (inputField.current && inputField.current.value.trim() !== '') {
+      if (inputField.current) {
         try {
           setLoading(true);
           const data = await onAdd(inputField.current.value);
 
-          inputField.current.value = '';
+          if (data) {
+            inputField.current.value = '';
+          }
 
           return data;
         } catch (err) {
