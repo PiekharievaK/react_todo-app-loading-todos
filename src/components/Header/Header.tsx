@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { ERROR } from '../../types/enums';
-import { Todo } from '../../types/Todo';
 
 type Props = {
-  onAdd: (value: string) => Promise<Todo>;
+  onAdd: (value: string) => Promise<unknown>;
 };
 
 export const Header: React.FC<Props> = ({ onAdd }) => {

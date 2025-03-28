@@ -40,16 +40,6 @@ export const App: React.FC = () => {
     loadTodos();
   }, []);
 
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setErrorMessage(ERROR.default);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [errorMessage]);
-
   const onAdd = useCallback(async (value: string) => {
     try {
       if (value.trim() === '') {
@@ -102,7 +92,10 @@ export const App: React.FC = () => {
           />
         )}
       </div>
-      <ErrorField errorMessage={errorMessage} />
+      <ErrorField
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
     </div>
   );
 };
